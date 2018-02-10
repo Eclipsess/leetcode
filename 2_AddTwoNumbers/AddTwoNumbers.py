@@ -25,9 +25,70 @@ class Solution(object):
             l4.next  = l3;              #l4.next 指向 新创建的l3节点保存最后数据
             l4 = l4.next ;              #14指向14.next 创建新节点循环
         return l5.next;
+        
+class Solution:
+    def addTwoNumbers(self, l1, l2):
+        addends = l1, l2
+        dummy = end = ListNode(0)
+        carry = 0
+        while addends or carry:
+            carry += sum(a.val for a in addends)
+            addends = [a.next for a in addends if a.next]
+            end.next = end = ListNode(carry % 10)
+            carry /= 10
+        return dummy.next
 
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
 
-
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        if l1 == None and l2 != None:
+            return l2
+        elif l1 != None and l2 == None:
+            return l1
+        elif l1 == None and l2 == None:
+            return None
+        head = ListNode(0)
+        p1 = l1
+        p2 = l2
+        res = head
+        flag = 0
+        while(p1 and p2):
+            sum_ = p1.val + p2.val + flag
+            if sum_ >= 10:
+                flag = 1
+            else:
+                flag = 0
+            sum_ %= 10
+            res.next = ListNode(sum_)
+            p1, p2 = p1.next, p2.next
+            res = res.next
+        if p2:
+            p1 = p2
+        while(p1):
+            sum_ = p1.val + flag
+            if sum_ >= 10:
+                flag = 1
+            else:
+                flag = 0
+            sum_ %= 10
+            res.next = ListNode(sum_)
+            p1 = p1.next
+            res = res.next
+        if flag == 1:
+            res.next = ListNode(1)
+        return head.next
+            
+        
 
          """
         :type l1: ListNode
